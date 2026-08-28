@@ -1,0 +1,30 @@
+# Этап 1: Сборка зависимостей (builder)
+FROM python:3.12-slim AS builder
+WORKDIR /app
+
+# 1. Создаем изолированное виртуальное окружение
+RUN python -m venv /opt/venv
+
+# 2. Активируем его для текущей стадии сборки (добавляем в PATH)
+ENV PATH="/opt/venv/bin:$PATH"
+
+# 3. Копируем файл зависимостей и устанавливаем их
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+
+# Этап 2: Финальный минимальный образ
+FROM python:3.12-slim
+WORKDIR /app
+
+# 1. Копируем готовое виртуальное окружение из этапа builder
+COPY --from=builder /opt/venv /opt/venv
+
+# 2. Добавляем его bin-директорию в PATH финального образа, чтобы uvicorn был доступен
+ENV PATH="/opt/venv/bin:$PATH"
+
+# 3. Обязательное требование задания: копируем всё содержимое проекта
+COPY . .
+
+# 4. Команда запуска приложения
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "5000"]

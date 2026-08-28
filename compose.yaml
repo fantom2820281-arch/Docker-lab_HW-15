@@ -1,0 +1,35 @@
+include:
+  - proxy.yaml
+
+services:
+  db:
+    image: mysql:8.0
+    restart: always
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u${MYSQL_USER}", "-p${MYSQL_PASSWORD}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      backend:
+        ipv4_address: 172.20.0.10
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.python
+    # image: cr.yandex/crpjsd7mmf0nrd0vrkm2/test/crp97nmtdlmndmh0thte/python-app:latest
+    restart: always
+    environment:
+      DB_HOST: db
+      DB_USER: ${MYSQL_USER}
+      DB_PASSWORD: ${MYSQL_PASSWORD}
+      DB_NAME: ${MYSQL_DATABASE}
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      backend:
+        ipv4_address: 172.20.0.5
