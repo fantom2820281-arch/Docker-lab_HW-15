@@ -1,0 +1,5 @@
+# Задача 5: класть в /etc/cron.d/mysql-backup (не в git с паролями).
+# Скрипт сам читает .env на ВМ.
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+* * * * * root /usr/local/bin/backup-mysql.sh

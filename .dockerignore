@@ -13,8 +13,11 @@ Dockerfile.python
 /haproxy
 /nginx
 .env
+.env.*
+/scripts
 Dima_Karina.txt
 
 *.private
 LICENSE
 README.md
+Karina.md

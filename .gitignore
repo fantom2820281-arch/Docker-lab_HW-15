@@ -1,13 +1,28 @@
-# --- личные заметки (не в GitHub) ---
+# --- должно ОСТАТЬСЯ в git (не игнорировать) ---
+# compose.yaml proxy.yaml main.py requirements.txt
+# Dockerfile Dockerfile.python nginx/ haproxy/
+# .env.example  scripts/deploy-to-opt.sh scripts/backup-mysql.sh scripts/backup-mysql.cron
+
+# --- личные заметки и агент ---
 Dima_Karina.txt
 Dima_Karina*.txt
+Karina.md
+AGENTS.md
 *.local.md
 notes/
+/history/
 
-# --- секреты и локальные настройки ---
+# --- секреты ---
 .env
 .env.*
 !.env.example
+
+# --- дампы и артефакты ДЗ на диске ---
+/opt/
+/backup/
+*.sql
+terraform
+terraform.exe
 
 # --- Python ---
 __pycache__/
@@ -26,17 +41,13 @@ ENV/
 .coverage
 htmlcov/
 
-# --- IDE / редакторы ---
+# --- IDE / ОС / логи ---
 .idea/
 .vscode/
 *.swp
 *.swo
 *~
-
-# --- ОС ---
 .DS_Store
 Thumbs.db
-
-# --- логи и мусор запуска ---
 *.log
 *.pid
